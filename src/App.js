@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { useState } from "react";
+import ExpenseForm from "./Components/ExpenseForm/ExpenseForm";
+import ExpenseInfo from "./Components/ExpenseInfo/ExpenseInfo";
+import ExpenseList from "./Components/ExpenseList/ExpenseList";
 
-function App() {
+export default function App() {
+  const [expense, setExpense] = useState({
+    text: "",
+    amount: "",
+    id: new Date().getTime(),
+  });
+  const [balance, setBalance] = useState({ income: 0, expense: 0 });
+  const [txnData, setTxnData] = useState([]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h2 className="mainHeading">Expense Tracker</h2>
+      <div className="App">
+        <ExpenseForm
+          expense={expense}
+          setExpense={setExpense}
+          txnData={txnData}
+          setTxnData={setTxnData}
+          balance={balance}
+          setBalance={setBalance}
+        />
+        <div className="expenseContainer">
+          <ExpenseInfo balance={balance} />
+          <ExpenseList
+            txnData={txnData}
+            setTxnData={setTxnData}
+            balance={balance}
+            setBalance={setBalance}
+          />
+        </div>
+      </div>
+    </>
   );
 }
-
-export default App;
